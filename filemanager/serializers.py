@@ -12,7 +12,7 @@ class UploadSerializer(Serializer):
 class ApplicationFileSerializer(ModelSerializer):
     class Meta:
         model = ApplicationFile
-        fields = ['filename', 'upload_date', 'file_size', 'file_content']
+        fields = ['id', 'filename', 'upload_date', 'file_size', 'file_content']
 
 class UserSerializer(ModelSerializer):
     class Meta:

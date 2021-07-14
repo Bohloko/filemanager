@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>File Manager Application</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>        
+      </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">File Manager</a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+              <form class="navbar-form navbar-left" action="">
+                <div class="form-group">
+                  <input type="text" id="search-field" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" id="search-button" class="btn btn-default">Submit</button>
+              </form>
+              {% if not user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#" id="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+              {% else %}
+              <ul class="nav navbar-nav navbar-right">
+                <li><a>Hi {{user.username}}!</a></li>
+                <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+              {% endif %}
+            </div>    
+        </nav>
+                      
+        {% block content %}
+
+        {% endblock content %}
+        <div class="modal" id="login-modal">
+            <a href="#close" class="modal-overlay close-modal" aria-label="Close"></a>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <a href="#close" class="btn btn-clear float-right close-modal" aria-label="Close"></a>
+                    <div class="modal-title h5">Please login</div>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <form>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="form-label" for="input-username">Username</label>
+                                <input class="form-input" type="text" id="input-username" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="input-password">Password</label>
+                                <input class="form-input" type="password" id="input-password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-checkbox" for="input-local-storage">
+                                    <input type="checkbox" id="input-local-storage" /> <i class="form-icon"></i>  Use local storage (remember me)
+                                </label>
+                            </div>
+                        </form>
+                        <div class='label label-error mt-1 d-invisible' id='modal-error'>
+                            Unable to login!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+        
+                    <button class="btn btn-primary" id='loginOkButton' >Ok</button>
+                    <a href="#close" class="btn close-modal" >Close</a>
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'js/filemanager.js' %}"></script>
+    </body>
+</html>

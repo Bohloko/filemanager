@@ -1,0 +1,39 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3>Upload File</h3>
+        </div>
+        <div class="card-body">
+            <form id='file-upload-form' method="POST" action="http://127.0.0.1:8000/api/upload/" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <input type="file" id='file-upload-field' name="file_uploaded">
+                <input type="submit" id="file-upload-button" value="Upload">
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>File Name</th>
+                        <th>File Size</th>
+                        <th>Upload Date</th>
+                        <th>Actions</th>                        
+                    </tr>
+                </thead>                    
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <h3>Search Results</h3>
+                <p>Files containing: <span id="word"></span></p>
+                <ul id="search-results">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
