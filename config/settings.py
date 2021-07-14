@@ -152,3 +152,14 @@ REST_FRAMEWORK = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
+
+TIME_ZONE = 'Africa/Windhoek'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT = 'home'

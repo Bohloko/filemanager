@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
-from .views import ApplicationFileViewSet, FileUploadViewSet, UserViewSet, FileSearchView
+from .views import ApplicationFileViewSet, FileUploadViewSet, UserViewSet, FileSearchView, file_delete
 
 router = SimpleRouter()
 router.register('users', UserViewSet, basename = 'users' )
@@ -10,6 +10,9 @@ router.register('upload', FileUploadViewSet, basename = 'uploads')
 urlpatterns = router.urls
 urlpatterns.append(
     path('search/', FileSearchView.as_view(), name='search'),
+)
+urlpatterns.append(
+    path('delete/<int:pk>', file_delete, name='delete'),
 )
 urlpatterns.append(
     path('api-auth', include('rest_framework.urls'))

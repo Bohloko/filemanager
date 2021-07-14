@@ -1,9 +1,9 @@
-var getCookie = function(name) {
-    var cookieValue = null;
+function getCookie(name) {
+    let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
             // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
@@ -12,27 +12,8 @@ var getCookie = function(name) {
         }
     }
     return cookieValue;
-};
-
-var initLogin = function() {
-    if(g_auth) {
-        $('#non-logged-in').hide();
-        $('#logged-in').show();
-        //$('#span-username').html(g_auth.username);
-        if(g_auth.remember_me) {
-            localStorage.setItem("auth", JSON.stringify(g_auth));
-        } else {
-            sessionStorage.setItem("auth", JSON.stringify(g_auth));
-        }
-    } else {
-        $('#non-logged-in').show();
-        $('#logged-in').hide();
-        $('#span-username').html('');
-        localStorage.removeItem("auth");
-        sessionStorage.removeItem("auth");
-    }
-    $('#test-auth-response').html("");
-};
+}
+const csrftoken = getCookie('csrftoken');
 
 var initHomePage = function(){
     $.ajax({
@@ -77,15 +58,14 @@ $(document).ready(function(){
     $('#tbody').on('submit', '.delete-form', function(e){
         e.preventDefault();
         var _url = 'http://127.0.0.1:8000/api/files/' + $(this).attr('id') + '/';
-        $.ajax({
-            url: _url,
-            data: {},
-            contentType: 'application/json',
-            dataType: 'text',
-            method: 'DELETE',          
-            success: function(){
-                location.reload();
+        fetch(_url,{
+            method: 'DELETE',
+            headers:{
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken
             }
+        }).then((response) => {
+            location.reload();
         })
     });
 

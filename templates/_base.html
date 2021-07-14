@@ -28,13 +28,13 @@
               </form>
               {% if not user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" id="sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="#" id="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="http://127.0.0.1:8000/api/dj-rest-auth/registration/" id="sign-up"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="http://127.0.0.1:8000/api/api-authlogin/?next=/api/dj-rest-auth/login/" id="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
               {% else %}
               <ul class="nav navbar-nav navbar-right">
                 <li><a>Hi {{user.username}}!</a></li>
-                <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li><a href="http://127.0.0.1:8000/api/dj-rest-auth/logout/" id="logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
               {% endif %}
             </div>    

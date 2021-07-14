@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework import generics
 from django.views import generic
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from django.http import JsonResponse, HttpResponse
 from .serializers import UploadSerializer, ApplicationFileSerializer, UserSerializer
 from .models import ApplicationFile
@@ -60,3 +61,9 @@ class FileSearchView(generic.View):
         response = sorted(response.items(), key= lambda item: item[1], reverse=True)
         print(response)
         return JsonResponse({'data': response})
+
+@api_view(['DELETE'])
+def file_delete(request, pk):
+    file = ApplicationFile.objects.get(id = pk)
+    file.delete()
+    return Response('File successfully Deleted')
