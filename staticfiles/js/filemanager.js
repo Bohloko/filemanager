@@ -120,30 +120,5 @@ $(document).ready(function(){
             }
         });
     });
-
-    //logout user via REST API
-    $('#logout').click(function(e){
-        e.preventDefault();
-        $.ajax({
-            url: 'http://127.0.0.1:8000/api/dj-rest-auth/logout/',
-            dataType: 'application/json',
-            contentType: 'application/json',
-            method: 'POST',
-            beforeSend: function(request){
-                try{
-                    request.setRequestHeader('Authorization', 'Token' + localStorage.getItem('auth').key);
-                }catch(error){
-                    request.setRequestHeader('Authorization', 'Token' + sessionStorage.getItem('auth').key);
-                }
-                
-            },
-            success: function(){
-                
-            }            
-        })
-    });
-
-    $('#login').click(function(e){
-        
-    });
-})
+    
+});

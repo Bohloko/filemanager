@@ -32,9 +32,27 @@ var initHomePage = function(){
     
 }
 
+var initUserManagement = function(){
+    $.ajax({
+        url: 'http://127.0.0.1:8000/api/users/',
+        contentType: 'application/json',
+        type: 'GET',
+        success: function(response){
+            
+            var tbody = $('#tbody-users');
+            for(var i = 0; i < response.length; i++)
+            {                
+                tbody.append('<tr><td>'+response[i].username+'</td><td>'+response[i].email+'</td><td>'+response[i].password+'</td><td><form id="'+response[i].id+'" class="delete-user-form" method="DELETE"><input type="submit" class="btn btn-danger" value="Delete"></td></tr></form>');
+            }
+        }
+    });
+    
+}
+
 $(document).ready(function(){
     initHomePage();
-    
+    initUserManagement();
+
     //upload file via REST API
     $('form').submit(function(e){
         e.preventDefault();
@@ -58,6 +76,21 @@ $(document).ready(function(){
     $('#tbody').on('submit', '.delete-form', function(e){
         e.preventDefault();
         var _url = 'http://127.0.0.1:8000/api/files/' + $(this).attr('id') + '/';
+        fetch(_url,{
+            method: 'DELETE',
+            headers:{
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken
+            }
+        }).then((response) => {
+            location.reload();
+        })
+    });
+
+    //delete a file via REST API
+    $('#tbody-users').on('submit', '.delete-user-form', function(e){
+        e.preventDefault();
+        var _url = 'http://127.0.0.1:8000/api/users/' + $(this).attr('id') + '/';
         fetch(_url,{
             method: 'DELETE',
             headers:{
@@ -105,7 +138,7 @@ $(document).ready(function(){
         var canv = document.getElementById('frequency-dist');
         var ctx = canv.getContext('2d');
         ctx.clearRect(0, 0, canv.clientWidth, canv.height);
-        
+
         var barChart = new Chart(ctx,{
             type: 'bar',
             data: {

@@ -17,4 +17,4 @@ class ApplicationFileSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password']

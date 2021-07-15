@@ -21,4 +21,3 @@ urlpatterns.append(
 urlpatterns.append(
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls'))
 )
-
