@@ -1,39 +1,56 @@
 {% extends '_base.html' %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header">
-            <h3>Upload File</h3>
-        </div>
-        <div class="card-body">
-            <form id='file-upload-form' method="POST" action="http://127.0.0.1:8000/api/upload/" enctype="multipart/form-data" >
-                {% csrf_token %}
-                <input type="file" id='file-upload-field' name="file_uploaded">
-                <input type="submit" id="file-upload-button" value="Upload">
-            </form>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>File Name</th>
-                        <th>File Size</th>
-                        <th>Upload Date</th>
-                        <th>Actions</th>                        
-                    </tr>
-                </thead>                    
-                <tbody id="tbody">
-
-                </tbody>
-            </table>
-        </div>
-        <hr>
+    {% if user.is_authenticated %}
         <div class="card">
+            <div class="card-header">
+                <h3>Upload File</h3>
+            </div>
             <div class="card-body">
-                <h3>Search Results</h3>
-                <p>Files containing: <span id="word"></span></p>
-                <ul id="search-results">
+                <form id='file-upload-form' method="POST" action="http://127.0.0.1:8000/api/upload/" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <input type="file" id='file-upload-field' name="file_uploaded">
+                    <input type="submit" id="file-upload-button" value="Upload">
+                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>File Size</th>
+                            <th>Upload Date</th>
+                            <th>Actions</th>                        
+                        </tr>
+                    </thead>                    
+                    <tbody id="tbody">
 
-                </ul>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Search Results</h3>
+                    <p>Files containing: <span id="word"></span></p>
+                    <div class="row"> 
+                        <ol id="search-results" class="col-md-4">
+
+                        </ol>
+                        <div class="col-md-4">
+                            <canvas id="frequency-dist" class="col-md-6" height="100" width="auto"></canvas>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
+    {% else %}
+    <div class="card">
+        <div class="card-header">
+            <h3>Welcome to File Manager App</h3>
+        </div>
+        <div class="card-body">
+            <p>Login or Signup to continue</p>
+        </div>
     </div>
+    {% endif %}
 {% endblock content %}

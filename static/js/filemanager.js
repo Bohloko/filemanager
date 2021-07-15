@@ -72,6 +72,11 @@ $(document).ready(function(){
     //search
     $('#search-button').click(function(e){
         e.preventDefault();
+        
+        //bar chart variables
+        var labels = []
+        var frequency = []
+
         var searchWord = $('#search-field').val();
         $('#word').html(searchWord);
         $('#search-field').val('') //clear the search field
@@ -84,13 +89,41 @@ $(document).ready(function(){
                 $('#search-results').html('');
                 for(var i = 0; i < response['data'].length; i++)
                     if(response['data'][i][1] != 0)
+                    {
                         $('#search-results').append('<li>'+response['data'][i][0]+' - Frequency: '+response['data'][i][1]+'</li>');
+                        labels.push(response['data'][i][0]);
+                        frequency.push(response['data'][i][1]);
+                    }
+                        
                 
             },
             error: function(e){
                 alert('Error');
             }
         });
+
+        var canv = document.getElementById('frequency-dist');
+        var ctx = canv.getContext('2d');
+        ctx.clearRect(0, 0, canv.clientWidth, canv.height);
+        
+        var barChart = new Chart(ctx,{
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets:[{
+                    label: 'Frequency Distribution',
+                    data: frequency,
+                    backgroundColor: [
+                        'rgba(0, 255, 0, 0.2)',
+                        'rgba(255, 0, 0, 0.2)'
+                    ]
+                }]
+            },
+            options: {
+                maintainAspectRation: false,            
+            }
+        });
+        
     });
 
     //logout user via REST API

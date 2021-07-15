@@ -32,7 +32,7 @@ class ApplicationFileViewSet(ModelViewSet):
         print("debug: " + pk)
         if(request.method == 'DELETE'):
             ApplicationFile.objects.get(id = pk).delete()
-            return Response('file deleeeeted')
+            return Response('file deleted')
         return Response('failed to delete')
 
 
@@ -62,8 +62,3 @@ class FileSearchView(generic.View):
         print(response)
         return JsonResponse({'data': response})
 
-@api_view(['DELETE'])
-def file_delete(request, pk):
-    file = ApplicationFile.objects.get(id = pk)
-    file.delete()
-    return Response('File successfully Deleted')
